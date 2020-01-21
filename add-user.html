@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+           <meta charset="utf-8">
+                <meta http-equiv="x-ua-compatible" content="ie=edge">
+                <title>Add User</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+                <link rel="stylesheet" href="../css/shards.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            myFunction();
+            list_of_users();
+
+
+             setInterval(function(){
+                myFunction();
+                list_of_users();
+            }, 5000);
+        });
+
+        function func_exit() {
+            window.location.href = "/";
+        }
+
+
+        function list_of_users() {
+            $.ajax({
+                url: "/getjson", success: function (response) {
+                    res = "";
+                    $.each(response, function (index, el) {
+                        res = res + "<br/>" + el.name ;
+                    });
+                    $("#data_users").html(res);
+                }, error: function () {
+                    console.log("error!");
+                    $("#data_users").html("Some error occured!");
+                }
+            })
+        }
+
+        function myFunction() {
+        $.ajax({
+            url: "/getjson", success: function (response) {
+                res = "";
+                $.each(response, function (index, el) {
+                    res = res + "<br/>" + el.name + ": " + el.message;
+                });
+                $("#data").html(res);
+            }, error: function () {
+                console.log("error!");
+                $("#data").html("Some error occured!");
+            }
+        });
+    };
+         //    }
+    </script>
+
+</head>
+<body>
+
+<button type="button" class="btn btn-primary" style=" position: fixed;
+  right: 100px;padding: 10px 30px; color: black;" onclick="func_exit()">Exit</button>
+
+
+<div class="container my-5">
+    <h2 class="mb-5">Chat-room</h2>
+    <!--    <ul th:each="message : ${sessionMessages}">-->
+    <!--        Welcome <li  th:text="${message}">msg</li>-->
+    <!--    </ul>-->
+    <h3>Welcome </h3>
+    <ul th:each="message : ${sessionMessages}">
+        <h3 th:text="${message}"> msg</h3>
+    </ul>
+
+    <h3 style="position: fixed; right: 100px;">List of users</h3>
+    <div id="data_users" style="position: fixed; right: 100px;">List of users: </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="message" class="col-form-label">Message</label>
+                        <input type="text" th:field="*{message}" class="form-control" id="message" placeholder="Type your message...">
+                        <span th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input type="submit" class="btn btn-primary" value="Send">
+                    </div>
+
+                </div>
+                <div id="data"></div>
+        </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

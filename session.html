@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Users</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<style>
+    body {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+    <script>
+
+        $(document).ready(function(){
+            $("#readme").click(function(){
+                window.location.href = "/readme";
+            });
+        });
+    </script>
+</head>
+<button id="readme" class="btn btn-primary" style=" position: fixed;
+  top: -100px;padding: 10px 30px;right: 160px;">README</button>
+<body>
+
+<div class="container">
+    <h1>Welcome to the chat!</h1>
+    <p style="margin-left:80px;" >Insert your name :)</p>
+<div>
+    <form th:action="@{/persistMessage}"  method="post">
+        <input   style="margin-left:70px;" name="msg" cols="40" rows="2" id="user-name"
+               value = "Solange"  required> </input><br>
+         <br> <input style="margin-left:120px;" type="submit" class="btn btn-primary" value="Join" required  />
+    </form>
+
+
+</div>
+
+
+</div>
+</body>
+</html>
